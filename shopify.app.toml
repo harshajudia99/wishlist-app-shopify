@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "wishlist"
+client_id = "a804a468b6d2634bf6f0a1fd53730438"
+application_url = "https://mrna-along-paid-florida.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_customers,write_customers,read_metaobject_definitions,write_metaobject_definitions,read_metaobjects,write_metaobjects,read_customer_merge,write_customer_merge"
+
+[auth]
+redirect_urls = [
+  "https://mrna-along-paid-florida.trycloudflare.com/auth/callback",
+  "https://mrna-along-paid-florida.trycloudflare.com/auth/shopify/callback",
+  "https://mrna-along-paid-florida.trycloudflare.com/api/auth/callback",
+  "https://mrna-along-paid-florida.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "harshajudia.myshopify.com"
