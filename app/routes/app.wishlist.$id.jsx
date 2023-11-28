@@ -41,10 +41,7 @@ export async function action({ request, params }) {
 
 export default function WishlistForm() {
   const { customers } = useLoaderData();
-
-  const navigate = useNavigate()
-
-  console.log(customers)
+  const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
     productsName: [],
@@ -70,12 +67,11 @@ export default function WishlistForm() {
           productImage: images[0]?.originalSrc,
           productAlt: images[0]?.altText,
           productTitle: title,
-          productId: id
+          productId: id,
         };
       });
       setFormState({ productsName: updatedProducts });
     }
-
   }
 
   const submit = useSubmit();
@@ -87,13 +83,10 @@ export default function WishlistForm() {
     const productId = formState.productsName.map((product) => product.productId);
     const productCount = productTitle.length;
 
-    console.log(productTitle)
-
-    console.log("Type of productCount:", typeof productCount);
-
     const data = {
       productTitle: productTitle,
-      customerName: selectedItems,
+      customerName: selectedItems[0].name, 
+      customerId: selectedItems[0].id, 
       productId: productId,
       productCount: productCount,
       productImage: productImage,
@@ -101,15 +94,20 @@ export default function WishlistForm() {
     };
 
     console.log(data);
-    submit(data, { method: "post" });
+    submit(data, { method: 'post' });
   }
 
   function handleCancel() {
-    navigate("/app")
+    navigate('/app');
   }
 
   return (
     <Page>
+      <ui-title-bar title={ "Create Wishlist"}>
+        <button variant="breadcrumb" onClick={() => navigate("/app")}>
+          Wishlist
+        </button>
+      </ui-title-bar>
       <Layout>
         <Layout.Section>
           <Card>

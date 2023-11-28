@@ -1,4 +1,3 @@
-// CustomerResourceList.js
 import React, { useState } from 'react';
 import { Card, ResourceList, Avatar, ResourceItem, Text } from '@shopify/polaris';
 import { getwishlistItem } from '../models/Wishlist.server';
@@ -7,21 +6,25 @@ import { useLoaderData } from 'react-router';
 export async function loader({ request, params }) {
   const { admin } = await authenticate.admin(request);
   if (params.id !== "new") {
-
     const wishlistItem = await getwishlistItem(Number(params.id), admin.graphql);
-
     return {
       wishlistItem
     };
   }
-
 }
 
 function CustomerResourceList({ customers, onSelectedItemsChange }) {
 
+  const {wishlistItem} = useLoaderData();
+  console.log(wishlistItem)
 
+  const [selectedItems, setSelectedItems] = useState(wishlistItem
+    ? [{ id: wishlistItem.customerId, name: wishlistItem.customerName }]
+    : []
+  );
+  
 
-  const [selectedItems, setSelectedItems] = useState([]);
+  // const [selectedItems, setSelectedItems] = useState([]);
 
   const resourceName = {
     singular: 'customer',
@@ -37,7 +40,7 @@ function CustomerResourceList({ customers, onSelectedItemsChange }) {
         id={id}
         media={media}
         accessibilityLabel={`View details for ${displayName}`}
-        selected={selectedItems.includes(id)} // Check if the customer is selected
+        selected={selectedItems.map(item => item.id).includes(id)} // Check if the customer is selected
       >
         <Text variant="bodyMd" fontWeight="bold" as="h3">
           {displayName}
@@ -54,13 +57,14 @@ function CustomerResourceList({ customers, onSelectedItemsChange }) {
 
     if (selectedCustomer) {
       const selectedDisplayName = selectedCustomer.displayName;
-      setSelectedItems([lastSelectedItemId]);
-
+      setSelectedItems([{ id: lastSelectedItemId, name: selectedDisplayName }]);
+      
       if (onSelectedItemsChange) {
-        onSelectedItemsChange(selectedDisplayName);
+        onSelectedItemsChange([{ id: lastSelectedItemId, name: selectedDisplayName }]);
       }
     } else {
       setSelectedItems([]);
+      
       if (onSelectedItemsChange) {
         onSelectedItemsChange(null); // or any default value when no item is selected
       }
@@ -76,7 +80,7 @@ function CustomerResourceList({ customers, onSelectedItemsChange }) {
         resourceName={resourceName}
         items={customers}
         renderItem={renderItem}
-        selectedItems={selectedItems}
+        selectedItems={selectedItems.map(item => item.id)}
         onSelectionChange={handleSelectionChange}
         selectable
       />

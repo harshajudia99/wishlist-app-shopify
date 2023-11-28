@@ -2,7 +2,7 @@
 
 name = "wishlist"
 client_id = "a804a468b6d2634bf6f0a1fd53730438"
-application_url = "https://mrna-along-paid-florida.trycloudflare.com"
+application_url = "https://out-contacts-overhead-restoration.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "read_customers,write_customers,read_metaobject_definitions,write_metao
 
 [auth]
 redirect_urls = [
-  "https://mrna-along-paid-florida.trycloudflare.com/auth/callback",
-  "https://mrna-along-paid-florida.trycloudflare.com/auth/shopify/callback",
-  "https://mrna-along-paid-florida.trycloudflare.com/api/auth/callback",
-  "https://mrna-along-paid-florida.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://out-contacts-overhead-restoration.trycloudflare.com/auth/callback",
+  "https://out-contacts-overhead-restoration.trycloudflare.com/auth/shopify/callback",
+  "https://out-contacts-overhead-restoration.trycloudflare.com/api/auth/callback",
+  "https://out-contacts-overhead-restoration.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

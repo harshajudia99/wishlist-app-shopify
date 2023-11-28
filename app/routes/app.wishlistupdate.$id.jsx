@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BlockStack, Button, Card, InlineStack, Layout, Page, PageActions, Text, Thumbnail } from '@shopify/polaris';
 import { getCustomers, getwishlistItem } from '../models/Wishlist.server';
 import { authenticate } from '../shopify.server';
-import { useLoaderData, useSubmit } from '@remix-run/react';
+import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react';
 import CustomerResourceList from '../Components/CustomerResourceList';
 import { ImageMajor } from "@shopify/polaris-icons";
 import db from "../db.server";
@@ -49,6 +49,8 @@ export async function action({ request, params }) {
 export default function WishlistForm() {
   const { customers, wishlistItem } = useLoaderData();
 
+  const navigate = useNavigate()
+
   const [formState, setFormState] = useState({
     wishlistItem: {
       ...wishlistItem,
@@ -71,7 +73,7 @@ export default function WishlistForm() {
     productsName
   })
 
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([{ id: wishlistItem.customerId, name: wishlistItem.customerName }]);
 
   const handleSelectedItemsChange = (items) => {
     setSelectedItems(items);
@@ -115,7 +117,8 @@ export default function WishlistForm() {
 
     const data = {
       productTitle: productTitle,
-      customerName: selectedItems,
+      customerName: selectedItems[0].name, 
+      customerId: selectedItems[0].id, 
       productId: productId,
       productCount: productCount,
       productImage: productImage,
@@ -129,6 +132,11 @@ export default function WishlistForm() {
 
   return (
     <Page>
+      <ui-title-bar title={ "Update Wishlist"}>
+        <button variant="breadcrumb" onClick={() => navigate("/app")}>
+          Wishlist
+        </button>
+      </ui-title-bar>
       <Layout>
         <Layout.Section>
           <Card>
